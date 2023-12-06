@@ -1,23 +1,45 @@
-# Arduino-SignalK Integration
+# Arduino SignalK Library
 
 ## Description
-This project is meant to be a library for connecting arduino devices to a signal K network.
+SignalKClient is an Arduino library designed for easy interaction with SignalK servers. It enables subscribing to SignalK data paths, handling incoming data, and publishing data back to the server.
 
-## Hardware Requirements
-- Arduino compatible board (e.g., Arduino Uno, Mega, or ESP8266 module)
+## Features
+- Subscribe to SignalK data paths
+- Publish data to SignalK server
+- Callbacks for handling incoming data
+- Robust error handling
+- Supports multiple data contexts
 
-## Software Dependencies
-- Arduino IDE for coding and uploading the sketch to the Arduino board
-
-## Setup and Configuration
-1. Install the Arduino IDE on your computer.
-2. Install the required libraries through the Arduino IDE's Library Manager.
+## Installation
+Download this library and import it into your Arduino IDE.
 
 ## Usage
-- 
+### Basic Setup
+Include the SignalKClient library in your Arduino project and use the following setup:
 
-## Notes
-- 
+#include "SignalKClient.h"
+SignalKClient signalk;
+void setup() {
+    Serial.begin(115200);
+    signalk.begin("YourSSID", "YourPassword", "signalk_server_address", 3000);
+    signalk.subscribe("your.path.here", [](JsonVariant& value) {
+        // Handle the value
+    });
+}
+void loop() {
+    signalk.loop();
+}
 
-## Support and Contribution
-For support, suggestions, or contributions to this project, please reach out through the project's repository or contact the author directly.
+### Publishing Data
+To publish data to the SignalK server, use:
+
+signalk.publish("your.path.here", value);
+
+## Contributing
+Contributions to this project are welcome. Please send pull requests or open issues to suggest improvements.
+
+## License
+This project is licensed under the [MIT License](LICENSE).
+
+## Acknowledgments
+Special thanks to the Arduino and SignalK communities for their support and contributions to this project.
