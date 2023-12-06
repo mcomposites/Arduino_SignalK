@@ -1,0 +1,15 @@
+#include "SignalKClient.h"
+
+SignalKClient signalk;
+
+void setup() {
+    Serial.begin(115200);
+    signalk.begin("YourSSID", "YourPassword", "signalk_server_address", 3000);
+    signalk.subscribe("environmental.lights.light1.brightness", [](JsonVariant& value) {
+        Serial.println(value.as<float>()); // Handle the value
+    });
+}
+
+void loop() {
+    signalk.loop();
+}
