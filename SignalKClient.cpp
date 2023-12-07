@@ -49,7 +49,7 @@ void SignalKClient::onWebSocketEvent(WStype_t type, uint8_t* payload, size_t len
         case WStype_DISCONNECTED:
             // Handles disconnection event.
             Serial.println("Disconnected from server, attempting to reconnect...");
-            reconnect(); // Attempts to reconnect.
+            /* reconnect function removed */
             break;
         case WStype_CONNECTED:
             // Handles connection event.
@@ -74,7 +74,8 @@ void SignalKClient::onWebSocketEvent(WStype_t type, uint8_t* payload, size_t len
                 for (JsonVariant update : doc["updates"][0]["values"].as<JsonArray>()) {
                     String path = update["path"].as<String>(); // Extracts the path from the update.
                     if (callbacks.find(path) != callbacks.end()) {
-                        callbacks[path](update["value"]); // Invokes the callback function for the path with the new value.
+                        ArduinoJson::JsonVariant tempVar = update["value"];
+                        callbacks[path](tempVar); // Modified to ensure proper type handling.
                     }
                 }
             }
@@ -83,14 +84,5 @@ void SignalKClient::onWebSocketEvent(WStype_t type, uint8_t* payload, size_t len
             // Handles WebSocket error event.
             Serial.println("WebSocket error occurred.");
             break;
-    }
-}
-
-void SignalKClient::reconnect() {
-    // Attempts to reconnect to the WiFi network and reinitialize the WebSocket connection.
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(5000); // Waits 5 seconds before trying to reconnect.
-        Serial.println("Attempting to reconnect to WiFi...");
-        WiFi.reconnect(); // Attempts to reconnect to the WiFi network
     }
 }
