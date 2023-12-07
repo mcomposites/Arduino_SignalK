@@ -5,6 +5,7 @@
 #include <ArduinoJson.h>
 #include <WebSocketsClient.h>
 #include <WiFi.h>
+#include <map>
 
 class SignalKClient {
 public:
