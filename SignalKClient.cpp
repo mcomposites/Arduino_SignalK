@@ -92,3 +92,5 @@ void SignalKClient::reconnect() {
         delay(5000); // Waits 5 seconds before trying to reconnect.
         Serial.println("Attempting to reconnect to WiFi...");
         WiFi.reconnect(); // Attempts to reconnect to the WiFi network
+    }
+}
