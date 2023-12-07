@@ -15,6 +15,7 @@ public:
     void subscribe(const String& path, std::function<void(JsonVariant&)> callback);
     void unsubscribe(const String& path);
     void publish(const String& path, const JsonVariant& value);
+    void reconnect();
 
 private:
     WebSocketsClient webSocket;
